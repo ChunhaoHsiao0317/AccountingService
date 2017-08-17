@@ -1,4 +1,6 @@
 ﻿using AccountingService.Models;
+using AccountingService.Models.Service;
+using ServiceLab.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,16 +11,27 @@ namespace AccountingService.Controllers
 {
     public class AccountingController : Controller
     {
-        // GET: Accounting
+        private readonly AccountBookService _AccountBookSvc;
+
+        public AccountingController()
+        {
+            var unitOfWork = new EFUnitOfWork();
+            _AccountBookSvc = new AccountBookService(unitOfWork);
+        }
+
         public ActionResult Index()
         {
-            var AccountList = new List<AccountingInfoViewModel>()
+            var source = _AccountBookSvc.Lookup();
+
+            foreach (AccountingInfoViewModel model in source)
             {
-                new AccountingInfoViewModel() { AccountingType = "支出", DateTime = DateTime.Parse("2017/01/01"), Amount = 1000 },
-                new AccountingInfoViewModel() { AccountingType = "支出", DateTime = Convert.ToDateTime("2016-01-02"), Amount = 20000 },
-                new AccountingInfoViewModel() { AccountingType = "支出", DateTime = Convert.ToDateTime("2016-01-03"), Amount = 30000 },
-            };
-            return View(AccountList);
+                if ("0".Equals(model.AccountingType))
+                    model.AccountingType = "收入";
+                if ("1".Equals(model.AccountingType))
+                    model.AccountingType = "支出";
+            }
+
+            return View(source);
         }
     }
 }
