@@ -15,7 +15,7 @@ namespace AccountingService.Controllers
 
         public AccountingController()
         {
-            var unitOfWork = new EFUnitOfWork();
+            var unitOfWork = new EFUnitOfWork(); 
             _AccountBookSvc = new AccountBookService(unitOfWork);
         }
 
