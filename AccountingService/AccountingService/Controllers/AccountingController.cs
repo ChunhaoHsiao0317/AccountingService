@@ -24,14 +24,6 @@ namespace AccountingService.Controllers
         {
             var source = _AccountBookSvc.Lookup();
 
-            foreach (AccountingInfoViewModel model in source)
-            {
-                if ("0".Equals(model.AccountingType))
-                    model.AccountingType = "收入";
-                if ("1".Equals(model.AccountingType))
-                    model.AccountingType = "支出";
-            }
-
             return View(source);
         }
     }

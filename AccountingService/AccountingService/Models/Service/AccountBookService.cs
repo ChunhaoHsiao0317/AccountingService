@@ -1,4 +1,5 @@
-﻿using ServiceLab.Repositories;
+﻿using AccountingService.Models.Enum;
+using ServiceLab.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace AccountingService.Models.Service
             var source = _AccountBookRep.LookupAll();
             var result = source.Select(accounting => new AccountingInfoViewModel()
             {
-                AccountingType = accounting.Categoryyy.ToString(),
+                AccountingType = (AccountingCategory) accounting.Categoryyy,
                 DateTime = accounting.Dateee,
                 Amount = accounting.Amounttt 
             }).ToList();
@@ -33,7 +34,7 @@ namespace AccountingService.Models.Service
         {
             var AccountBook = new AccountBook()
             {
-                Categoryyy = int.Parse(ViewModel.AccountingType) ,
+                Categoryyy = (int) ViewModel.AccountingType ,
                 Dateee = ViewModel.DateTime,
                 Amounttt = Convert.ToInt32(ViewModel.Amount) 
             };

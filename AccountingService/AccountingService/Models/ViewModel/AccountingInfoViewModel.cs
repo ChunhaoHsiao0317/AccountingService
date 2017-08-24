@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AccountingService.Models.Enum;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace AccountingService.Models
@@ -6,7 +7,7 @@ namespace AccountingService.Models
     public class AccountingInfoViewModel
     {
         [Display(Name = "類別")]
-        public string AccountingType { get; set; }
+        public AccountingCategory AccountingType { get; set; }
 
         [Display(Name = "日期")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
