@@ -1,5 +1,6 @@
 ﻿using AccountingService.Models;
 using AccountingService.Models.Service;
+using PagedList;
 using ServiceLab.Repositories;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,8 @@ namespace AccountingService.Controllers
     {
         private readonly AccountBookService _AccountBookSvc;
 
+        int defaultPageSize = 10;
+
         public AccountingController()
         {
             // Test Branch
@@ -20,11 +23,13 @@ namespace AccountingService.Controllers
             _AccountBookSvc = new AccountBookService(unitOfWork);
         }
 
-        public ActionResult Index()
+        public ActionResult Index(int page = 1, int pagesize = 10)
         {
-            var source = _AccountBookSvc.Lookup();
+            var source = _AccountBookSvc.Lookup().OrderBy(x => x.DateTime);
 
-            return View(source);
+            
+
+            return View(source.ToPagedList(page, pagesize));
         }
     }
 }

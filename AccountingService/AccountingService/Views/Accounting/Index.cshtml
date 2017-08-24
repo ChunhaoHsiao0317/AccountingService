@@ -2,6 +2,8 @@
 @{
     ViewBag.Title = "Index";
 }
+@using PagedList
+@using PagedList.Mvc
 
 <div class="well">
     <form class="form-horizontal">
@@ -60,5 +62,9 @@
                 </tr>
             }
         </table>
+
+        <div class="pager">
+            @Html.PagedListPager((IPagedList)Model, x => Url.Action("Index", new { page = x }), PagedListRenderOptions.Classic)
+        </div>
     </div>
 </div>
